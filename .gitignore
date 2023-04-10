@@ -1,0 +1,8 @@
+#Ignore Directories
+.vs/
+x64/
+
+#Ignore Extensions
+*.user
+
+#Ignore Files
