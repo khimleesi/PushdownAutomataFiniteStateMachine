@@ -11,10 +11,10 @@ public:
 
 public:
 	template<typename State, typename... Args>
-	void MakePermanentState(Args... args);
+	void MakePermanentState(Args&&... args);
 
 	template<typename State, typename... Args>
-	void MakeTemporaryState(Args... args);
+	void MakeTemporaryState(Args&&... args);
 
 public:
 	const std::deque<std::unique_ptr<BaseState>>& GetAllStates() const;
@@ -53,9 +53,9 @@ FiniteStateMachine<BaseState>::~FiniteStateMachine()
 *******************************************************************************************************************/
 template <class BaseState>
 template <typename State, typename... Args>
-void FiniteStateMachine<BaseState>::MakePermanentState(Args... args) {
+void FiniteStateMachine<BaseState>::MakePermanentState(Args&&... args) {
 	
-	m_states.emplace_back(std::make_unique<State>(args...));
+	m_states.emplace_back(std::make_unique<State>(std::forward<Args>(args)...));
 }
 
 
@@ -64,9 +64,9 @@ void FiniteStateMachine<BaseState>::MakePermanentState(Args... args) {
 *******************************************************************************************************************/
 template <class BaseState>
 template <typename State, typename... Args>
-void FiniteStateMachine<BaseState>::MakeTemporaryState(Args... args) {
+void FiniteStateMachine<BaseState>::MakeTemporaryState(Args&&... args) {
 
-	m_states.emplace_front(std::make_unique<State>(args...));
+	m_states.emplace_front(std::make_unique<State>(std::forward<Args>(args)...));
 }
 
 
